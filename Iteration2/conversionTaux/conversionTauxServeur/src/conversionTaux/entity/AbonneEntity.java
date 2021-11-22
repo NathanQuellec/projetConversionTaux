@@ -45,9 +45,9 @@ public class AbonneEntity {
 	}
 
     // association avec FavoriEntity
-    private List<FavoriEntity> lesFavoris;
+    private List<FavoriEntity> lesFavoris = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany (cascade=CascadeType.ALL)
     
     public List<FavoriEntity> getLesFavoris(){
         return this.lesFavoris;

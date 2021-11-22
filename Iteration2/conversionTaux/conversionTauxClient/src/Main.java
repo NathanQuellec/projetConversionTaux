@@ -45,44 +45,76 @@ public static void main(String[] args) throws Exception {
 
      try {
             InitialContext ctx = new InitialContext();
-            conversionTaux.session.ConversionTauxNonAbonneItf c = 
+            conversionTaux.session.ConversionTauxNonAbonneItf c1 = 
                 (conversionTaux.session.ConversionTauxNonAbonneItf) ctx.lookup("ConversionTauxNonAbonneJNDI");
-
-            Scanner s = new Scanner(System.in);
             
-            String welcomeText = " Voulez-vous : \n" +
-                                    "1 - Creer un compte \n" +
-                                    "2 - Convertir une somme \n";
+            conversionTaux.session.ConversionTauxAbonneItf c2 = 
+                (conversionTaux.session.ConversionTauxAbonneItf) ctx.lookup("ConversionTauxAbonneJNDI");
 
-            System.out.println(welcomeText);
+            while(true) {
 
-            int choix = s.nextInt();
-
-            if(choix == 1){
-                Scanner s1 = new Scanner(System.in);
-                System.out.println("Saisir le login");
-                String login = s1.nextLine();
-
-                System.out.println("Saisir le mot de passe");
-                String passwd = s1.nextLine();
-
-                System.out.println(c.creerCompte(login, passwd));
-            } 
-            else if(choix == 2){
-                Scanner s2 = new Scanner(System.in);
-                System.out.println("Saisir une premiere monnaie");
-                String monnaieA = s2.nextLine();
-
-                System.out.println("Saisir une deuxieme monnaie");
-                String monnaieB = s2.nextLine();
-
-                System.out.println("Saisir un montant");
-                double montant = s2.nextInt();
+                Scanner s = new Scanner(System.in);
                 
-                System.out.println(c.convertir(monnaieA, monnaieB, montant));
-            } 
-            else{
-                System.out.println("Erreur de saisie ! Veuillez taper un chiffre valide");
+                String welcomeText = " Voulez-vous : \n" +
+                                        "1 - Creer un compte \n" +
+                                        "2 - Convertir une somme \n" +
+                                        "3 - Se connecter \n" + 
+                                        "4 - Creer un favori \n";
+
+                System.out.println(welcomeText);
+
+                int choix = s.nextInt();
+
+                if(choix == 1){
+                    Scanner s1 = new Scanner(System.in);
+                    System.out.println("Saisir le login");
+                    String login = s1.nextLine();
+
+                    System.out.println("Saisir le mot de passe");
+                    String passwd = s1.nextLine();
+
+                    System.out.println(c1.creerCompte(login, passwd));
+                } 
+                else if(choix == 2){
+                    Scanner s2 = new Scanner(System.in);
+                    System.out.println("Saisir une premiere monnaie");
+                    String monnaieA = s2.nextLine();
+
+                    System.out.println("Saisir une deuxieme monnaie");
+                    String monnaieB = s2.nextLine();
+
+                    System.out.println("Saisir un montant");
+                    double montant = s2.nextInt();
+                    
+                    System.out.println(c1.convertir(monnaieA, monnaieB, montant));
+                } 
+                else if(choix == 3){
+                    Scanner s3 = new Scanner(System.in);
+                    System.out.println("Saisir le login");
+                    String login = s3.nextLine();
+
+                    System.out.println("Saisir le mot de passe");
+                    String passwd = s3.nextLine();
+
+                    System.out.println(c2.connecter(login, passwd));
+                } 
+                else if(choix == 4){
+                    Scanner s4 = new Scanner(System.in);
+
+                    System.out.println("Saisir votre favori");
+                    String favori = s4.nextLine();
+
+                    System.out.println("Saisir une premiere monnaie");
+                    String monnaieA = s4.nextLine();
+
+                    System.out.println("Saisir une deuxieme monnaie");
+                    String monnaieB = s4.nextLine();
+                    
+                    System.out.println(c2.ajouterFavori(favori, monnaieA, monnaieB));
+                } 
+                else{
+                    System.out.println("Erreur de saisie ! Veuillez taper un chiffre valide");
+                }
             }
 	
     }

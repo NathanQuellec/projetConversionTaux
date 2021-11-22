@@ -1,3 +1,4 @@
+
 CREATE TABLE Abonne
    (
     idAbonne INTEGER  NOT NULL,

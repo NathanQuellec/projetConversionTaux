@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "Taux")
 public class TauxEntity  {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue (strategy=GenerationType.IDENTITY)
     private int idTaux;
     public int getIdTaux() {
         return this.idTaux;

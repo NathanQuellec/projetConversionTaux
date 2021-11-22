@@ -108,6 +108,7 @@ public class ConversionTauxBean implements ConversionTauxItf, ConversionTauxCste
                             .setParameter("param2", monnaieB)
                             .getSingleResult();
             em.remove(te);
+            te = null;
             return SUCCESS;
         }
         catch(NoResultException e)
@@ -158,6 +159,7 @@ public class ConversionTauxBean implements ConversionTauxItf, ConversionTauxCste
                             .setParameter("param", login)
                             .getSingleResult();
             em.remove(ae);
+            ae = null;
             return SUCCESS;
         }
         catch(NoResultException e)
