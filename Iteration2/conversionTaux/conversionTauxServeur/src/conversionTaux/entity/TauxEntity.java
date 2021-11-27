@@ -1,15 +1,13 @@
 package conversionTaux.entity;
 
-import javax.persistence.*;
-
-
-//classe java à transformer en classe entity JPA
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "Taux")
+@Table(name="Taux")
 public class TauxEntity  {
-
-    @Id @GeneratedValue (strategy=GenerationType.IDENTITY)
+    @Id
     private int idTaux;
     public int getIdTaux() {
         return this.idTaux;

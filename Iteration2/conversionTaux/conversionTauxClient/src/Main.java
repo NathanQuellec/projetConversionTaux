@@ -59,7 +59,8 @@ public static void main(String[] args) throws Exception {
                                         "1 - Creer un compte \n" +
                                         "2 - Convertir une somme \n" +
                                         "3 - Se connecter \n" + 
-                                        "4 - Creer un favori \n";
+                                        "4 - Creer un favori \n" +
+                                        "5 - Se deconnecter \n";
 
                 System.out.println(welcomeText);
 
@@ -112,6 +113,10 @@ public static void main(String[] args) throws Exception {
                     
                     System.out.println(c2.ajouterFavori(favori, monnaieA, monnaieB));
                 } 
+                else if(choix == 5) {
+                    c2.deconnecter();
+                    break;
+                }
                 else{
                     System.out.println("Erreur de saisie ! Veuillez taper un chiffre valide");
                 }

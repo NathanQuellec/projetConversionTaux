@@ -33,29 +33,33 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
         }
     }
 
-    public String ajouterFavori(String favori, String monnaieA, String monnaieB){
+    public String ajouterFavori(String favori, String monnaieA, String monnaieB){   // la table Abonne_Favori du sgbd sera mise a jour uniquement a la deconnection 
+
+        if(abonne == null) {
+            return ACCESS_DENIED;
+        }
+         em.merge(abonne);
+
+        // add try catch unique libelle
+        Collection<FavoriEntity> listeFav = new ArrayList<>();
+        listeFav = abonne.getLesFavoris();
+
         try {
-
-            em.merge(abonne);
-            //em.refresh(abonne);
-            // add try catch unique libelle
-            List<FavoriEntity> listeFav = abonne.getLesFavoris();
-
+            
             TauxEntity te = (TauxEntity) em.createQuery("SELECT te FROM TauxEntity te WHERE te.monnaieA = :param1 and te.monnaieB = :param2")
                                 .setParameter("param1", monnaieA)
                                 .setParameter("param2", monnaieB)
                                 .getSingleResult();
 
-            FavoriEntity newFavori = new FavoriEntity();
-            em.persist(newFavori);
-            newFavori.setLeTaux(te);
-            newFavori.setLibelleFavori(favori);
+            FavoriEntity newFavori = new FavoriEntity(favori, te);
+            
 
             listeFav.add(newFavori);
-
             abonne.setLesFavoris(listeFav);
             
-            return SUCCESS;
+            em.persist(newFavori);              
+            em.detach(abonne);
+            return SUCCESS + " " + abonne.getLesFavoris();
         }
         catch(NoResultException e) {
             return NO_RESULTAT;
@@ -71,6 +75,7 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
     }
 
     public String deconnecter(){
+        em.merge(abonne);
         if(abonne != null) {
             abonne = null;
             return SUCCESS;
