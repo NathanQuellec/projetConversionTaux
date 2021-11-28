@@ -41,6 +41,7 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
             return ACCESS_DENIED;
         
          abonne = em.merge(abonne);
+         em.refresh(abonne);
 
         // add try catch unique libelle
  
@@ -95,6 +96,7 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
             return ACCESS_DENIED;
 
         abonne = em.merge(abonne);
+        em.refresh(abonne);
 
         try {
             //on recupere le bon favori de l'abonne connecte
@@ -126,6 +128,7 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
             return ACCESS_DENIED;
         }
         abonne = em.merge(abonne);
+        em.refresh(abonne);
         try {
            // on recupere le taux du bon favori ET de l'abonne connecte
             double taux = (Double) em.createQuery("SELECT te.taux FROM AbonneEntity ae JOIN ae.lesFavoris fe JOIN fe.leTaux te WHERE ae.login = :param1  and fe.libelleFavori = :param2")
@@ -149,6 +152,7 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
         
         if(abonne != null) {
             abonne = em.merge(abonne);
+            em.refresh(abonne);
             abonne = null;
             return SUCCESS;
         }
