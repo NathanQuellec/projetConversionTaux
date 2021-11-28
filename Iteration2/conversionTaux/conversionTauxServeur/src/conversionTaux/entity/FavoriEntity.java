@@ -26,7 +26,7 @@ public class FavoriEntity {
         this.libelleFavori = libelleFavori;
     }
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     private TauxEntity leTaux;
 
     public TauxEntity getLeTaux() {

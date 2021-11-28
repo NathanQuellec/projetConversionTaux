@@ -60,7 +60,9 @@ public static void main(String[] args) throws Exception {
                                         "2 - Convertir une somme \n" +
                                         "3 - Se connecter \n" + 
                                         "4 - Creer un favori \n" +
-                                        "5 - Se deconnecter \n";
+                                        "5 - Se deconnecter \n" +
+                                        "6 - Convertir une somme Fav \n" +
+                                        "7 - Supprimer un favori \n";
 
                 System.out.println(welcomeText);
 
@@ -116,6 +118,26 @@ public static void main(String[] args) throws Exception {
                 else if(choix == 5) {
                     c2.deconnecter();
                     break;
+                }
+                else if(choix == 6) {
+                    Scanner s6 = new Scanner(System.in);
+
+                    System.out.println("Saisir votre favori");
+                    String favori = s6.nextLine();
+
+                    System.out.println("Saisir votre montant");
+                    double montant = s6.nextDouble();
+
+                    System.out.println(c2.convertir(favori, montant));
+                }
+                else if(choix == 7) { // erreur contrainte table Abonne_Favori
+                    Scanner s7 = new Scanner(System.in);
+
+                    System.out.println("Saisir votre favori");
+                    String favori = s7.nextLine();
+
+                    System.out.println(c2.supprimerFavori(favori));
+
                 }
                 else{
                     System.out.println("Erreur de saisie ! Veuillez taper un chiffre valide");

@@ -47,11 +47,6 @@ public class AbonneEntity {
         this.lesFavoris = lesFavoris; 
     }
 
-    public void ajouteFavori(FavoriEntity leFavori) {
-        this.lesFavoris.add(leFavori); 
-    } 
-
-
     public AbonneEntity()
     {
     }
