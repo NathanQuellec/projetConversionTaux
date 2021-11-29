@@ -1,6 +1,6 @@
 package conversionTaux.session.nonAbonne;
 
-import javax.ejb.Remote;
+import javax.ejb.*;
 
 @Remote()
 public interface ConversionTauxNonAbonneItf {

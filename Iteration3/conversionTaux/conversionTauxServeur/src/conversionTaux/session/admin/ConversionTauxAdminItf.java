@@ -1,6 +1,6 @@
-package conversionTaux.session.abonne;
+package conversionTaux.session.admin;
 
-import javax.ejb.Remote;
+import javax.ejb.*;
 
 @Remote()
 public interface ConversionTauxAdminItf {

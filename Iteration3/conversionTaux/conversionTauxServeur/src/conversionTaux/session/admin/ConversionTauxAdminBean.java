@@ -1,8 +1,9 @@
-package conversionTaux.session.abonne;
+package conversionTaux.session.admin;
 
 import javax.ejb.*;
 import javax.persistence.*;
 import conversionTaux.session.ConversionTauxCste;
+import conversionTaux.session.compteur.*;
 import conversionTaux.entity.*;
 import java.util.*;
 
@@ -13,16 +14,42 @@ public class ConversionTauxAdminBean implements ConversionTauxAdminItf, Conversi
     @PersistenceContext (unitName = "ConversionTauxPU")
     
     private EntityManager em;
+    private AdminEntity admin;
+
+    @EJB
+    private conversionTaux.session.compteur.ConversionTauxCptSingletonItf c;
 
     public String connecter(String login, String passwd){
-        return SUCCESS;
+
+        if(admin != null)
+            return "Vous etes deja connectes";
+
+        try {
+            admin = (AdminEntity) em.createQuery("SELECT ade FROM AdminEntity WHERE ade.login = :param1 and ade.passwd = :passwd")
+                                    .setParameter("param1", login)
+                                    .setParameter("param2", passwd)
+                                    .getSingleResult();
+            return SUCCESS;
+        }
+        catch(NonUniqueResultException e) {
+            return RESULTAT_MULTIPLE;
+        }
+        catch(NoResultException e) {
+            return  NO_RESULTAT;
+        }
     }
 
     public String consulterNbConnexion(){
-        return SUCCESS;
+        int rep = c.lireCpt();
+        return SUCCESS + rep;
     }
 
     public String deconnecter(){
+        admin = em.merge(admin);
+        if(admin == null)
+            return ACCESS_DENIED;
+
+        admin = null;
         return SUCCESS;
     }
 }

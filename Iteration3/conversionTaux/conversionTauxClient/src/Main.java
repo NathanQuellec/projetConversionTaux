@@ -36,4 +36,18 @@ public static void main(String[] args) throws Exception {
      Vérifier que tout est resté ok.
     
      */
+
+     try {
+         InitialContext ctx = new InitialContext();
+            conversionTaux.session.ConversionTauxNonAbonneItf nonAbonne = 
+                (conversionTaux.session.ConversionTauxNonAbonneItf) ctx.lookup("ConversionTauxNonAbonneJNDI");
+            
+            conversionTaux.session.ConversionTauxAbonneItf abonne = 
+                (conversionTaux.session.ConversionTauxAbonneItf) ctx.lookup("ConversionTauxAbonneJNDI");
+
+            conversionTaux.session.ConversionTauxAbonneItf admin = 
+                (conversionTaux.session.ConversionTauxAbonneItf) ctx.lookup("ConversionTauxAdminJNDI");
+
+
+     }
 }

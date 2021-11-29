@@ -7,13 +7,17 @@ import conversionTaux.entity.*;
 import java.util.*;
 
 @Stateful (mappedName = "ConversionTauxAbonneJNDI")
-
+ 
 public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, ConversionTauxCste {
 
     @PersistenceContext (unitName = "ConversionTauxPU")
     
     private EntityManager em;
     private AbonneEntity abonne;
+
+
+    @EJB
+    private conversionTaux.session.compteur.ConversionTauxCptSingletonItf c;
 
     public String connecter(String login, String passwd){
         // ajouter ecriture cpt ici
@@ -25,6 +29,7 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
                                                 .setParameter("param1", login)
                                                 .setParameter("param2", passwd)
                                                 .getSingleResult();
+            c.incrementerCpt();
             return SUCCESS;
         }
         catch(NoResultException e) {
