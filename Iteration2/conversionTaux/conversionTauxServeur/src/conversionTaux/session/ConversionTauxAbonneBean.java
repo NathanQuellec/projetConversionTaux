@@ -24,7 +24,6 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
                                                 .setParameter("param1", login)
                                                 .setParameter("param2", passwd)
                                                 .getSingleResult();
-            em.detach(abonne);
             return SUCCESS;
         }
         catch(NoResultException e) {
@@ -75,7 +74,6 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
                 abonne.setLesFavoris(listeFav);
                 
                 em.persist(newFavori);              
-                em.detach(abonne);
                 return SUCCESS + " " + abonne.getLesFavoris();
             }
             catch (EntityExistsException eee) {
@@ -111,7 +109,6 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
             abonne.setLesFavoris(listeFav);
 
             em.remove(fe);
-            em.detach(abonne);
             return SUCCESS + fe;
         }
         catch(NoResultException e) {
@@ -136,7 +133,6 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
                                     .setParameter("param2", favori)
                                     .getSingleResult();
 
-            em.detach(abonne);
             return RESULTAT + (montant * taux);
         }
         catch (NonUniqueResultException e){
