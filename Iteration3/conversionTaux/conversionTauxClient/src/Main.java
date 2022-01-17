@@ -1,7 +1,6 @@
 import javax.naming.InitialContext;
 import java.io.*;
 import java.util.*;
-import conversionTaux.session.*;
 
 public class Main {
 public static void main(String[] args) throws Exception {
@@ -39,15 +38,37 @@ public static void main(String[] args) throws Exception {
 
      try {
          InitialContext ctx = new InitialContext();
-            conversionTaux.session.ConversionTauxNonAbonneItf nonAbonne = 
-                (conversionTaux.session.ConversionTauxNonAbonneItf) ctx.lookup("ConversionTauxNonAbonneJNDI");
+            conversionTaux.session.nonAbonne.ConversionTauxNonAbonneItf nonAbonne = 
+                (conversionTaux.session.nonAbonne.ConversionTauxNonAbonneItf) ctx.lookup("ConversionTauxNonAbonneJNDI");
             
-            conversionTaux.session.ConversionTauxAbonneItf abonne = 
-                (conversionTaux.session.ConversionTauxAbonneItf) ctx.lookup("ConversionTauxAbonneJNDI");
+            conversionTaux.session.abonne.ConversionTauxAbonneItf abonne1 = 
+                (conversionTaux.session.abonne.ConversionTauxAbonneItf) ctx.lookup("ConversionTauxAbonneJNDI");
 
-            conversionTaux.session.ConversionTauxAbonneItf admin = 
-                (conversionTaux.session.ConversionTauxAbonneItf) ctx.lookup("ConversionTauxAdminJNDI");
+            conversionTaux.session.abonne.ConversionTauxAbonneItf abonne2 = 
+                (conversionTaux.session.abonne.ConversionTauxAbonneItf) ctx.lookup("ConversionTauxAbonneJNDI");
+
+            conversionTaux.session.admin.ConversionTauxAdminItf admin = 
+                (conversionTaux.session.admin.ConversionTauxAdminItf) ctx.lookup("ConversionTauxAdminJNDI");
+           
+
+            System.out.println(abonne1.connecter("a1", "a1m"));
+            System.out.println(abonne2.connecter("a2", "a2m"));
+
+            System.out.println(admin.connecter("admin", "admin"));
+            System.out.println(admin.consulterNbConnexion());
+
+            System.out.println(abonne2.listerFavoris());
+
+            System.out.println(abonne1.deconnecter());
+            System.out.println(abonne2.deconnecter()); 
+            System.out.println(admin.deconnecter());
+
 
 
      }
+    catch (Exception ex) {
+            System.err.println("erreur dans le lookup");
+            ex.printStackTrace();
+        }
+}
 }

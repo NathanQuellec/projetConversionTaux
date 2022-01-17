@@ -1,4 +1,4 @@
-package conversionTaux.session.abonne;
+package conversionTaux.session.admin;
 
 import javax.ejb.Remote;
 

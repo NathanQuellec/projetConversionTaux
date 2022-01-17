@@ -5,6 +5,7 @@ import javax.persistence.*;
 import conversionTaux.session.ConversionTauxCste;
 import conversionTaux.entity.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Stateful (mappedName = "ConversionTauxAbonneJNDI")
  
@@ -125,11 +126,40 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
         }
     }
 
+    public String listerFavoris(){
+        if(abonne == null)
+            return ACCESS_DENIED;
+        
+        abonne = em.merge(abonne);
+        em.refresh(abonne);
+
+        try{
+
+            List<Object[]> rep = em.createQuery("SELECT ae.login, fe.libelleFavori, te.monnaieA, te.monnaieB, te.taux " +
+                                            "FROM AbonneEntity ae JOIN ae.lesFavoris fe JOIN fe.leTaux te WHERE ae.login = :param1")
+                                .setParameter("param1", abonne.getLogin())
+                                .getResultList();
+
+            List<Object> repToSend = new ArrayList<>();
+
+            for(Object[] obj : rep){
+                 repToSend.add(Arrays.asList(obj));
+            }
+               
+            
+            return SUCCESS + " " + repToSend;
+
+        }
+        catch (NoResultException e){
+            return NO_RESULTAT;
+        }
+    }
+
     public String convertir(String favori, double montant){
 
-        if(abonne == null){
+        if(abonne == null)
             return ACCESS_DENIED;
-        }
+        
         abonne = em.merge(abonne);
         em.refresh(abonne);
         try {
@@ -155,6 +185,7 @@ public class ConversionTauxAbonneBean implements ConversionTauxAbonneItf, Conver
         if(abonne != null) {
             abonne = em.merge(abonne);
             em.refresh(abonne);
+            c.decrementerCpt();
             abonne = null;
             return SUCCESS;
         }

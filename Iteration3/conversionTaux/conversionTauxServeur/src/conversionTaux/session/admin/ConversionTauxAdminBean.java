@@ -25,7 +25,7 @@ public class ConversionTauxAdminBean implements ConversionTauxAdminItf, Conversi
             return "Vous etes deja connectes";
 
         try {
-            admin = (AdminEntity) em.createQuery("SELECT ade FROM AdminEntity WHERE ade.login = :param1 and ade.passwd = :passwd")
+            admin = (AdminEntity) em.createQuery("SELECT ade FROM AdminEntity ade WHERE ade.login = :param1 and ade.passwd = :param2")
                                     .setParameter("param1", login)
                                     .setParameter("param2", passwd)
                                     .getSingleResult();
@@ -40,8 +40,11 @@ public class ConversionTauxAdminBean implements ConversionTauxAdminItf, Conversi
     }
 
     public String consulterNbConnexion(){
+        if(admin == null)
+            return ACCESS_DENIED;
+
         int rep = c.lireCpt();
-        return SUCCESS + rep;
+        return RESULTAT_ADMIN + rep;
     }
 
     public String deconnecter(){

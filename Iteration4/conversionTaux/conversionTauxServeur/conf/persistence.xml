@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+<persistence-unit name="ConversionTauxPU" transaction-type="JTA">
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <jta-data-source>MySQLDataSource</jta-data-source>
+</persistence-unit>
+</persistence>
